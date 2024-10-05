@@ -22,3 +22,8 @@ body {
   padding-top: 25px;
   padding-bottom: 25px;
 }
+
+div#map {
+  width: 400px;
+  height: 400px;
+}
