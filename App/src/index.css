@@ -1,34 +1,16 @@
 :root {
+  --colour-primary: white;
+  --colour-secondary1: fuchsia;
+  --colour-secondary2: black;
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--colour-secondary2);
+  background-color: var(--colour-primary);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-header {
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  left: 0px;
-  height: 25px;
-  color: white;
-  background-color: fuchsia;
-}
-
-footer {
-  position: fixed;
-  right: 0px;
-  left: 0px;
-  bottom: 0px;
-  height: 25px;
-  color: white;
-  background-color: fuchsia;
 }

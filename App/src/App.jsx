@@ -1,11 +1,7 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/logo.svg'
-import './App.css'
+import "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
       <header>
@@ -19,6 +15,7 @@ function App() {
       <p>
         Map goes here
       </p>
+
       <footer>
         Footer
       </footer>
@@ -26,4 +23,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
