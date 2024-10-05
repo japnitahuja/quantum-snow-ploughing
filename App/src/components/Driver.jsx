@@ -3,7 +3,7 @@ import mapboxgl from "mapbox-gl";
 
 import "mapbox-gl/dist/mapbox-gl.css";
 
-export default function Citizen() {
+export default function Driver() {
   const mapRef = useRef();
   const mapContainerRef = useRef();
 
