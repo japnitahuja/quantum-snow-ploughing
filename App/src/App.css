@@ -1,29 +1,3 @@
-header {
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  left: 0px;
-  height: 25px;
-  color: var(--colour-primary);
-  background-color: var(--colour-secondary1);
-}
-
-footer {
-  position: fixed;
-  right: 0px;
-  left: 0px;
-  bottom: 0px;
-  height: 25px;
-  color: var(--colour-primary);
-  background-color: var(--colour-secondary1);
-}
-
 body {
-  padding-top: 25px;
-  padding-bottom: 25px;
-}
-
-div#map {
-  width: 400px;
-  height: 400px;
+  margin: 0;
 }
