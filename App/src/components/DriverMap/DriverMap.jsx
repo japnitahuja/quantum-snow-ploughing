@@ -5,9 +5,10 @@ import axios from 'axios';
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import snowplough from "../../assets/snowplough.png"
 
+import '../Footer/Footer.css';
 
 const DriverMap = () => {
     const mapRef = useRef();
@@ -60,7 +61,7 @@ const DriverMap = () => {
 
         console.log(mapboxDirectionsUrl)
         const response = await axios.get(mapboxDirectionsUrl);
-  
+
         const routes = response.data.routes;
         console.log("routes=>", routes);
         setRouteInfo(routes);
@@ -78,7 +79,7 @@ const DriverMap = () => {
         if (mapRef.current.getLayer("route")) {
             mapRef.current.removeLayer("route");
         }
-        
+
         if (mapRef.current.getSource("route")) {
             mapRef.current.removeSource("route");
         }
@@ -99,7 +100,7 @@ const DriverMap = () => {
   useEffect(() => {
     if (mapRef.current && routeGeometry) {
     // mapRef.current.fitBounds(routeGeometry.bounds, { padding: 20 });
-  
+
     mapRef.current.addLayer({
         id: "route",
         type: "line",
@@ -134,6 +135,19 @@ const DriverMap = () => {
     }
   }, [destination])
 
+  let currentLeg = null;
+  let nextLeg = null;
+
+  if (routeInfo.length > 0) {
+    currentLeg = routeInfo[0].legs[0].summary;
+
+    if (routeInfo[0].legs.length > 0) {
+      nextLeg = routeInfo[0].legs[1];
+    } else if (routeInfo.length > 1) {
+      nextLeg = routeInfo[0].legs[0].summary;
+    }
+  }
+
      return <div>
       <Header/>
 
@@ -142,7 +156,11 @@ const DriverMap = () => {
                 height: '80vh', // Set the height of the map
             }} id="map" ref={mapContainerRef} />
 
-      <button onClick={changeDestination}>customer report</button>
+      <footer className='footer'>
+        {currentLeg && <><span>Current leg: {currentLeg}</span><br /></> }
+        {nextLeg && <><span>Next leg: {nextLeg}</span><br /></> }
+        <button onClick={changeDestination}>customer report</button>
+      </footer>
     </div>
 };
 
