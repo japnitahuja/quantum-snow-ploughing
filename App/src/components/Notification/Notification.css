@@ -1,0 +1,10 @@
+.Notification_Show {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  height: fit-content;
+  padding: 1em;
+  background-color: red;
+  color: var(--colour-primary);
+}
