@@ -7,24 +7,29 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import snowplough from "../../assets/snowplough.png"
+import redBuzz from "../../assets/redbuzz.png"
 
 
 const DriverMap = () => {
     const mapRef = useRef();
     const mapContainerRef = useRef();
     const [origin, setOrigin] = useState([-114.034192,51.015964]);
-    const [destination, setDestination] = useState([-114.033971, 51.014200]);
     const [routeGeometry, setRouteGeometry] = useState(null);
     const [routeInfo, setRouteInfo] = useState([]);
-    const [changeDestinationFlag, setChangeDestinationFlag] = useState(false)
+    const [driverDestination, setDriverDestination] = useState([-114.035957,51.011821]);
+    const [changeDestinationFlag, setChangeDestinationFlag] = useState(false);
+    const redErrorCoords = [ -114.031652,51.014329]
 
     useEffect(() => {
+    localStorage.setItem('driverDestination', JSON.stringify([-114.035957,51.011821]));
+    localStorage.setItem('changeDestinationFlag', JSON.stringify(false));
+    
     mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
     mapRef.current = new mapboxgl.Map({
       container: mapContainerRef.current,
       center: [-114.032705,51.014443],
       style:'mapbox://styles/mapbox/streets-v12',
-      zoom: 16,
+      zoom: 15.5,
     });
 
     mapRef.current.on('style.load', () => {
@@ -40,8 +45,6 @@ const DriverMap = () => {
         new mapboxgl.Marker(customMarker) // Create a new marker
         .setLngLat(origin) // Set the coordinates of the marker
         .addTo(mapRef.current)
-
-
       });
 
     return () => {
@@ -50,11 +53,11 @@ const DriverMap = () => {
   }, [])
 
   const calcRouteDirection = async () => {
+    console.log("calc route direction triggered")
       try {
-        console.log(destination)
+        console.log(driverDestination)
         const mapboxDirectionsUrl = `https://api.mapbox.com/directions/v5/mapbox/driving/${origin[0]},${origin[1]};${
-            destination[0]
-          },${destination[1]}?steps=true&geometries=geojson&access_token=${
+          driverDestination[0]},${driverDestination[1]}?steps=true&geometries=geojson&access_token=${
             import.meta.env.VITE_MAPBOX_TOKEN
           }`;
 
@@ -123,16 +126,39 @@ const DriverMap = () => {
     }
   }, [mapRef.current, routeGeometry]);
 
-  const changeDestination = () => {
-    setDestination([-114.030954,51.012230])
-    setChangeDestinationFlag(true)
-  }
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedDestination = localStorage.getItem('driverDestination');
+      const storedDestinationFlag =localStorage.getItem('changeDestinationFlag');
+      if (storedDestination) {
+        setDriverDestination(JSON.parse(storedDestination));
+        setChangeDestinationFlag(JSON.parse(storedDestinationFlag))
+      }
+    };
+  
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
 
   useEffect (() => {
     if (changeDestinationFlag) {
         calcRouteDirection()
+
+        const customMarker = document.createElement('div');
+        customMarker.style.backgroundImage = `url(${redBuzz})`; // Set your custom image URL
+        customMarker.style.width = '50px'; // Width of the marker
+        customMarker.style.height = '50px'; // Height of the marker
+        customMarker.style.backgroundSize = 'cover'; // Ensure the image covers the div
+        customMarker.style.borderRadius = '50%'; // Optional: make it circular
+
+        new mapboxgl.Marker(customMarker) // Create a new marker
+        .setLngLat(redErrorCoords) // Set the coordinates of the marker
+        .addTo(mapRef.current)
     }
-  }, [destination])
+  }, [driverDestination,changeDestinationFlag])
 
      return <div>
       <Header/>
@@ -142,7 +168,7 @@ const DriverMap = () => {
                 height: '80vh', // Set the height of the map
             }} id="map" ref={mapContainerRef} />
 
-      <button onClick={changeDestination}>customer report</button>
+      {/* <button onClick={changeDestination}>customer report</button> */}
     </div>
 };
 

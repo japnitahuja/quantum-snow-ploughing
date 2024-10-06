@@ -9,111 +9,85 @@ import Footer from '../Footer/Footer';
 
 const CitizenMap = () => {
     const mapRef = useRef();
-    const mapContainerRef = useRef();
-    const [origin, setOrigin] = useState([-114.034192,51.015964]);
-    const [destination, setDestination] = useState([-114.033971, 51.014200]);
-    const [routeGeometry, setRouteGeometry] = useState(null);
-    const [routeInfo, setRouteInfo] = useState([]);
-    const [changeDestinationFlag, setChangeDestinationFlag] = useState(false)
+    const citizenMapContainerRef = useRef();
+    const colouredLanesCoordinates = [[[-114.034269,51.015972],[-114.035728,51.011947],"rgb(248,123,123)"], //bottom
+                                      [[-114.037531,51.016074],[-114.034192,51.015964],"rgb(139,231,138)"], //before
+                                      [[-114.030877,51.012211],[-114.034192,51.015964],"rgb(248,123,123)"],
+                                      [[-114.034600,51.014415],[-114.030877,51.012211],"rgb(248,123,123)"],
+                                      [[-114.033817,51.018699],[-114.035996,51.016110],"rgb(139,231,138)"]]
 
     useEffect(() => {
     mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
     mapRef.current = new mapboxgl.Map({
-      container: mapContainerRef.current,
+      container: citizenMapContainerRef.current,
       center: [-114.032705,51.014443],
       style:'mapbox://styles/mapbox/streets-v12',
-      zoom: 15,
+      zoom: 15.4,
     });
+
+
+    mapRef.current.on('style.load', () => {
+      colouredLanesCoordinates.forEach(async (lane, index) => {
+        let route = await calcRouteDirection(lane[0],lane[1])
+        console.log(route)
+        renderLanes(index,route[0].geometry,lane[2])
+      })
+    });
+
+    
 
     return () => {
       mapRef.current.remove()
     }
   }, [])
 
-  const calcRouteDirection = async () => {
+  const changeDestination = () => {
+    console.log("change destination clicked")
+    localStorage.setItem('driverDestination', JSON.stringify([-114.030935,51.012165]));
+    localStorage.setItem('changeDestinationFlag', JSON.stringify(true));
+  }
+
+  const renderLanes = async (index,routeGeometry,color) => {
+    mapRef.current.addLayer({
+      id: `route${index}`,
+      type: "line",
+      source: {
+        type: "geojson",
+        data: {
+          type: "Feature",
+          properties: {},
+          geometry: routeGeometry,
+        },
+      },
+      layout: {
+        "line-join": "round",
+        "line-cap": "round",
+      },
+      paint: {
+        "line-color": color,
+        "line-width": 4,
+      },
+    });
+  }
+
+  const calcRouteDirection = async (origin,dest) => {
+    console.log("calc route direction triggered")
       try {
-        console.log(destination)
         const mapboxDirectionsUrl = `https://api.mapbox.com/directions/v5/mapbox/driving/${origin[0]},${origin[1]};${
-            destination[0]
-          },${destination[1]}?steps=true&geometries=geojson&access_token=${
+          dest[0]},${dest[1]}?steps=true&geometries=geojson&access_token=${
             import.meta.env.VITE_MAPBOX_TOKEN
           }`;
-
-        console.log(mapboxDirectionsUrl)
         const response = await axios.get(mapboxDirectionsUrl);
-  
         const routes = response.data.routes;
-        console.log("routes=>", routes);
-        setRouteInfo(routes);
-        // Check if any routes are returned
-        if (routes.length > 0) {
-        const { distance, duration, geometry } = routes[0];
-
-        // Valid directions, use the distance and duration for further processing
-        const directions = {
-            distance,
-            duration,
-        };
-        localStorage.setItem("fromLocation", origin);
-
-        if (mapRef.current.getLayer("route")) {
-            mapRef.current.removeLayer("route");
+        return routes
         }
-        
-        if (mapRef.current.getSource("route")) {
-            mapRef.current.removeSource("route");
-        }
-
-        setRouteGeometry(geometry); // Set the route geometry
-        return directions;
-        } else {
-        // No routes found
-        throw new Error("Unable to calculate directions");
-        }
-    } catch (error) {
+     catch (error) {
         // Handle error
         console.error("Error calculating directions:", error);
         throw error;
     }
   };
 
-  useEffect(() => {
-    if (mapRef.current && routeGeometry) {
-    // mapRef.current.fitBounds(routeGeometry.bounds, { padding: 20 });
-  
-    mapRef.current.addLayer({
-        id: "route",
-        type: "line",
-        source: {
-          type: "geojson",
-          data: {
-            type: "Feature",
-            properties: {},
-            geometry: routeGeometry,
-          },
-        },
-        layout: {
-          "line-join": "round",
-          "line-cap": "round",
-        },
-        paint: {
-          "line-color": "#00f",
-          "line-width": 4,
-        },
-      });
-    }
-  }, [mapRef.current, routeGeometry]);
-
-  const changeDestination = () => {
-    setDestination([-114.030954,51.012230])
-    setChangeDestinationFlag(true)
-  }
-
-  useEffect (() => {
-    if (changeDestinationFlag) {
-        calcRouteDirection()
-    }
-  }, [destination])
 
      return <div>
       <Header/>
@@ -121,11 +95,9 @@ const CitizenMap = () => {
       <div style={{
                 width: '100vw', // Set the width of the map
                 height: '82.5vh', // Set the height of the map
-            }} id="map" ref={mapContainerRef} />
+            }} id="citizenmap" ref={citizenMapContainerRef} />
 
-      {/* <button onClick={calcRouteDirection} >Travel</button>
-      <button onClick={changeDestination}>customer report</button> */}
-      <Footer/>
+      <Footer changeDestination={changeDestination}/>
     </div>
 };
 
