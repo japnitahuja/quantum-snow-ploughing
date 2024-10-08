@@ -7,19 +7,19 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import Header from '../Header/Header';
 // import Footer from '../Footer/Footer';
 import snowplough from "../../assets/snowplough.png"
-import redBuzz from "../../assets/redbuzz.png"
+import redBuzz from "../../assets/50.png"
 
 import '../Footer/Footer.css';
 
 const DriverMap = () => {
     const mapRef = useRef();
     const mapContainerRef = useRef();
-    const [origin, setOrigin] = useState([-114.034192,51.015964]);
+    const [origin, setOrigin] = useState([-114.034583,51.014473]);
     const [routeGeometry, setRouteGeometry] = useState(null);
     const [routeInfo, setRouteInfo] = useState([]);
     const [driverDestination, setDriverDestination] = useState([-114.035957,51.011821]);
     const [changeDestinationFlag, setChangeDestinationFlag] = useState(false);
-    const redErrorCoords = [ -114.031652,51.014329]
+    const redErrorCoords = [-114.033542,51.013470]
 
     useEffect(() => {
     localStorage.setItem('driverDestination', JSON.stringify([-114.035957,51.011821]));

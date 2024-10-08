@@ -1,0 +1,14 @@
+{
+  "data": {
+    "nodes": [
+      {"id": 1, "label": "Nodo 1"},
+      {"id": 2, "label": "Nodo 2"},
+      {"id": 3, "label": "Nodo 3"}
+    ],
+    "adjacency_matrix": [
+      [0, 1, 3],
+      [1, 0, 2],
+      [3, 2, 0]
+    ]
+  }
+}
