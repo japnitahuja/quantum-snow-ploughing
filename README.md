@@ -2,7 +2,7 @@
 
 🏆 We proudly secured first place at the GenQ Hackathon by QAI Ventures🏆
 
-![IMG_6065 2](https://github.com/user-attachments/assets/c109c18d-ef41-40ab-b238-ebdda6e792fd)
+<img width="400" alt="Screenshot 2024-10-08 at 10 55 21 AM" src="https://github.com/user-attachments/assets/2e226261-85d6-45fb-889b-e3c2dae1e265">
 
 A quantum-powered real-time snow ploughing app for route planning, explores the application of quantum computing to optimize snow ploughing routes. 
 
