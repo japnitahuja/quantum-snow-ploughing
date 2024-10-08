@@ -22,6 +22,7 @@ https://github.com/user-attachments/assets/81eb6da2-532b-4cbf-b457-e119720baaad
 # Quantum Solution
 
 ## Hybrid Approach
+Using classical computer for the parameter optimization and quantum computer for solving the NP-hard part of the problem!
 
 <img width="1096" alt="Screenshot 2024-10-08 at 10 55 21 AM" src="https://github.com/user-attachments/assets/aed1af2d-9694-455d-8bd3-08128b1893e8">
 
