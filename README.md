@@ -4,11 +4,9 @@
 
 <img width="400" alt="Screenshot 2024-10-08 at 10 55 21 AM" src="https://github.com/user-attachments/assets/2e226261-85d6-45fb-889b-e3c2dae1e265">
 
-A quantum-powered real-time snow ploughing app for route planning, explores the application of quantum computing to optimize snow ploughing routes. 
-
-[Hackathon Pitch](https://www.canva.com/design/DAGSrsZbRAQ/Aqf1Kp43jx623YvmKYiRKA/view?utm_content=DAGSrsZbRAQ&utm_campaign=designshare&utm_medium=link&utm_source=editor)
-
 # Our App
+
+A quantum-powered real-time snow ploughing app for route planning, explores the application of quantum computing to optimize snow ploughing routes! [Hackathon Pitch](https://www.canva.com/design/DAGSrsZbRAQ/Aqf1Kp43jx623YvmKYiRKA/view?utm_content=DAGSrsZbRAQ&utm_campaign=designshare&utm_medium=link&utm_source=editor)
 
 #### Citizen: Ability to navigate roads safely and report lanes which are not ploughed
 
