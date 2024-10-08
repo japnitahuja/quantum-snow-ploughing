@@ -1,6 +1,8 @@
 ![Brand_StreetGuardian-03 (1)](https://github.com/user-attachments/assets/e4f29584-8067-4feb-89ca-22dac7c22c86)
 
-A quantum-powered real-time snow ploughing app for route planning, explores the application of quantum computing to optimize snow ploughing routes. We proudly secured first place 🏆 at the GenQ Hackathon by QAI Ventures. 
+🏆 We proudly secured first place at the GenQ Hackathon by QAI Ventures🏆
+
+A quantum-powered real-time snow ploughing app for route planning, explores the application of quantum computing to optimize snow ploughing routes. 
 
 [Hackathon Pitch](https://www.canva.com/design/DAGSrsZbRAQ/Aqf1Kp43jx623YvmKYiRKA/view?utm_content=DAGSrsZbRAQ&utm_campaign=designshare&utm_medium=link&utm_source=editor)
 
